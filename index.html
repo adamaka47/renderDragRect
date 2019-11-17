@@ -87,25 +87,7 @@
 				}
 			})
 
-			div.addEventListener('touchstart', function(e) {
-				target = div;
-				offsetXX = e.offsetX;
-				offsetYY = e.offsetY;
-			})
-
-			div.addEventListener('touchend', function() {
-				target = null;
-			})
-
-			document.addEventListener('touchmove', e => {
-				if (target) {
-					let a = e.clientY - offsetYY + 'px';
-					let b = e.clientX - offsetXX + 'px';
-					div.style.top = a;
-					div.style.left = b;
-				}
-			})
-
+			
 
 		})
 
