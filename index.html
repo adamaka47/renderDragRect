@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>LoftBlog listeners</title>
+	<style>
+		body {
+			margin: 0;
+			overflow-x: hidden;
+		}
+
+		.wrapper {
+			min-height: 100vh;
+			background-color: #222;
+			position: relative;
+		}
+
+		#btn {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-webkit-transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+			-o-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			-webkit-transition: 0.4s;
+			-o-transition: 0.4s;
+			transition: 0.4s;
+		}
+			
+	</style>
+</head>
+<body>
+	
+	<div class="wrapper">
+		
+	</div>
+
+	<button id="btn"> render it</button>
+
+	<script>
+
+		function randomColor(min, max) {
+			let r =  min + Math.floor(Math.random() * (max - min + 1));
+			let g = min + Math.floor(Math.random() * (max - min + 1));
+			let b = min + Math.floor(Math.random() * (max - min + 1));
+			return `rgb(${r},${g},${b})`
+		}
+
+		function randomNum(min, max) {
+			let num =  min + Math.floor(Math.random() * (max - min + 1));
+			return num;
+		}
+		
+		btn.addEventListener('click', function(e) {
+			this.style.top = '150px'
+			let div = document.createElement('div');
+			div.style.backgroundColor = randomColor(0, 255);
+			div.style.width = div.style.height = randomNum(120, 200) + 'px';
+			let offsetX = document.documentElement.clientWidth - parseInt(div.style.width);
+			let offsetY = document.documentElement.clientHeight - parseInt(div.style.height);
+			div.style.position = 'absolute';
+			div.style.top = randomNum(0, offsetY) + 'px'
+			div.style.left = randomNum(0, offsetX) + 'px'
+			document.querySelector('.wrapper').appendChild(div);
+			let target = null;
+
+			let offsetXX = null;
+			let offsetYY = null;
+
+			div.addEventListener('mousedown', function(e) {
+				target = div;
+				offsetXX = e.offsetX;
+				offsetYY = e.offsetY;
+			})
+
+			div.addEventListener('mouseup', function() {
+				target = null;
+			})
+
+			document.addEventListener('mousemove', e => {
+				if (target) {
+					let a = e.clientY - offsetYY + 'px';
+					let b = e.clientX - offsetXX + 'px';
+					div.style.top = a;
+					div.style.left = b;
+				}
+			})
+
+			div.addEventListener('touchstart', function(e) {
+				target = div;
+				offsetXX = e.offsetX;
+				offsetYY = e.offsetY;
+			})
+
+			div.addEventListener('touchend', function() {
+				target = null;
+			})
+
+			document.addEventListener('touchmove', e => {
+				if (target) {
+					let a = e.clientY - offsetYY + 'px';
+					let b = e.clientX - offsetXX + 'px';
+					div.style.top = a;
+					div.style.left = b;
+				}
+			})
+
+
+		})
+
+
+		
+
+
+	</script>
+</body>
+</html>
